@@ -1949,6 +1949,7 @@ static int mmci_probe(struct amba_device *dev,
 	host = mmc_priv(mmc);
 	host->mmc = mmc;
 
+    variant->opendrain=1; //ENG: otherwise error Can't select opendrain pins
 	/*
 	 * Some variant (STM32) doesn't have opendrain bit, nevertheless
 	 * pins can be set accordingly using pinctrl
@@ -1976,6 +1977,7 @@ static int mmci_probe(struct amba_device *dev,
 			ret = PTR_ERR(host->pins_opendrain);
 			goto host_free;
 		}
+
 	}
 
 	host->hw_designer = amba_manf(dev);
