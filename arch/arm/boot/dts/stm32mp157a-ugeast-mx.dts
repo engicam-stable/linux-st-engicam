@@ -297,33 +297,7 @@
             slew-rate = <0>;
         };
     };
-    fmc_pins_mx: fmc_mx-0 {
-        u-boot,dm-pre-reloc;
-        pins1 {
-            u-boot,dm-pre-reloc;
-            pinmux = <STM32_PINMUX('D', 0, AF12)>, /* FMC_D2 */
-                     <STM32_PINMUX('D', 1, AF12)>, /* FMC_D3 */
-                     <STM32_PINMUX('D', 4, AF12)>, /* FMC_NOE */
-                     <STM32_PINMUX('D', 5, AF12)>, /* FMC_NWE */
-                     <STM32_PINMUX('D', 11, AF12)>, /* FMC_CLE */
-                     <STM32_PINMUX('D', 12, AF12)>, /* FMC_ALE */
-                     <STM32_PINMUX('D', 14, AF12)>, /* FMC_D0 */
-                     <STM32_PINMUX('D', 15, AF12)>, /* FMC_D1 */
-                     <STM32_PINMUX('E', 7, AF12)>, /* FMC_D4 */
-                     <STM32_PINMUX('E', 8, AF12)>, /* FMC_D5 */
-                     <STM32_PINMUX('E', 9, AF12)>, /* FMC_D6 */
-                     <STM32_PINMUX('E', 10, AF12)>, /* FMC_D7 */
-                     <STM32_PINMUX('G', 9, AF12)>; /* FMC_NCE */
-            bias-disable;
-            drive-push-pull;
-            slew-rate = <1>;
-        };
-        pins2 {
-            u-boot,dm-pre-reloc;
-            pinmux = <STM32_PINMUX('D', 6, AF12)>; /* FMC_NWAIT */
-            bias-disable;
-        };
-    };
+ 
     i2c2_pins_mx: i2c2_mx-0 {
         pins {
             pinmux = <STM32_PINMUX('H', 4, AF4)>, /* I2C2_SCL */
