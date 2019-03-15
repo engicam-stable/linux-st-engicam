@@ -785,29 +785,25 @@
 
 
 &adc {
-	pinctrl-names = "default";
-	pinctrl-0 = <&adc12_usb_pwr_pins_a>;
+	/* ANA0, ANA1 are dedicated pins and don't need pinctrl: only in6. */
 	vdd-supply = <&vdd>;
-	vdda-supply = <&vdd>;
-	vref-supply = <&vrefbuf>;
+	vdda-supply = <&vdda>;
+	vref-supply = <&vdda>;
 	status = "okay";
 	adc1: adc@0 {
-		/*
-		 * Type-C USB_PWR_CC1 & USB_PWR_CC2 on in18 & in19.
-		 * Use at least 5 * RC time, e.g. 5 * (Rp + Rd) * C:
-		 * 5 * (56 + 47kOhms) * 5pF => 2.5us.
-		 * Use arbitrary margin here (e.g. 5µs).
-		 */
-		st,min-sample-time-nsecs = <5000>;
-		/* ANA0, ANA1, USB Type-C CC1 & CC2 */
-		st,adc-channels = <0 1 18 19>;
+		st,adc-channels = <0 1>;
+		/* 16.5 ck_cycles sampling time */
+		st,min-sample-time-nsecs = <400>;
 		status = "okay";
 	};
+	jadc1: jadc@0 {
+		st,adc-channels = <0 1>;
+		/* 16.5 ck_cycles sampling time */
+		st,min-sample-time-nsecs = <400>;
+		status = "okay";
+	};
+	/* temperature sensor on adc2 */
 	adc2: adc@100 {
-		/* ANA0, ANA1, temp sensor, USB Type-C CC1 & CC2 */
-		st,adc-channels = <0 1 12 18 19>;
-		/* temperature sensor min sample time */
-		st,min-sample-time-nsecs = <10000>;
 		status = "okay";
 	};
 	adc_temp: temp {
@@ -815,6 +811,9 @@
 	};
 };
 
+&dts {
+	status = "okay";
+};
 
 &pwr {
 	status = "okay";
