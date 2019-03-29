@@ -64,9 +64,21 @@
 			no-map;
 		};
 
-		gpu_reserved: gpu@dc000000 {
+		gpu_reserved: gpu@cc000000 {
 			reg = <0xcc000000 0x4000000>;
 			no-map;
+		};
+	};
+	sram: sram@10050000 {
+		compatible = "mmio-sram";
+		reg = <0x10050000 0x10000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges = <0 0x10050000 0x10000>;
+
+		dma_pool: dma_pool@0 {
+			reg = <0x0 0x10000>;
+			pool;
 		};
 	};
 
@@ -236,6 +248,7 @@
         };
     };
 }; /*root*/
+
 
 
 &pinctrl_z {
@@ -784,6 +797,19 @@
 	regulator-max-microvolt = <2500000>;
 	vdda-supply = <&vdd>;
 	status = "okay";
+};
+
+&gpu {
+	contiguous-area = <&gpu_reserved>;
+	status = "okay";
+};
+
+&dma1 {
+	sram = <&dma_pool>;
+};
+
+&dma2 {
+	sram = <&dma_pool>;
 };
 
 /* USER CODE END addons */
