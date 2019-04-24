@@ -712,7 +712,7 @@
 };
 
 &usbotg_hs {
-	dr_mode = "peripheral";
+	dr_mode = "host";
 	force-b-session-valid;
 	phys = <&usbphyc_port1 0>;
 	phy-names = "usb2-phy";
