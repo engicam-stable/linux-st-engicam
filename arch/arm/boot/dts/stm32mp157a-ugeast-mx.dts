@@ -389,7 +389,7 @@
         pins2 {
             u-boot,dm-pre-reloc;
             pinmux = <STM32_PINMUX('D', 8, AF7)>, /* USART3_TX */
-                     <STM32_PINMUX('B', 13, AF7)>; /* USART3_CTS */
+                     <STM32_PINMUX('G', 8, AF8)>; /* USART3_RTS */
             bias-disable;
             drive-push-pull;
             slew-rate = <0>;
@@ -619,6 +619,7 @@
 &usart3{
     pinctrl-names = "default";
     pinctrl-0 = <&usart3_pins_mx>;
+    linux,rs485-enabled-at-boot-time;
     status = "okay";
 
     /* USER CODE BEGIN usart3 */
@@ -711,7 +712,7 @@
 };
 
 &usbotg_hs {
-	dr_mode = "peripheral";
+	dr_mode = "host";
 	force-b-session-valid;
 	phys = <&usbphyc_port1 0>;
 	phy-names = "usb2-phy";
