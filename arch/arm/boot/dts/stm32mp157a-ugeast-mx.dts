@@ -8,6 +8,7 @@
 #include "stm32mp157c.dtsi"
 #include "stm32mp157c-m4-srm.dtsi"
 #include "stm32mp157cac-pinctrl.dtsi"
+#include <dt-bindings/rtc/rtc-stm32.h>
 
 /* USER CODE BEGIN includes */
 /* USER CODE END includes */
@@ -192,6 +193,28 @@
 		enable-active-high;
 		regulator-always-on;
 	};
+
+	reg_wifi: regulator-wifi {
+		compatible = "regulator-fixed";
+		regulator-name = "wifi";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpiob 4 1>;
+		startup-delay-us = <100>;
+        enable-active-high;
+        regulator-always-on;
+	};
+
+	reg_bl: regulator-bt {
+		compatible = "regulator-fixed";
+		regulator-name = "bt";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpioa 0 1>;
+		startup-delay-us = <100>;
+        enable-active-high;
+        regulator-always-on;
+	};
 	
 	/* USER CODE BEGIN root */
 	
@@ -355,11 +378,33 @@
                             <STM32_PINMUX('D', 2, AF12)>; /* SDMMC1_CMD */
                 slew-rate = <3>;
                 drive-push-pull;
+                bias-pull-up;
         };
         pins2 {
                 pinmux = <STM32_PINMUX('C', 12, AF12)>; /* SDMMC1_CK */
                 slew-rate = <3>;
                 drive-push-pull;
+                bias-pull-down;
+        };
+    };
+
+    sdmmc3_pins_mx: sdmmc3_mx-0 {
+        u-boot,dm-pre-reloc;
+        pins1 {
+                pinmux = <STM32_PINMUX('F', 0, AF9)>, /* SDMMC2_D0 */
+                            <STM32_PINMUX('F', 4, AF9)>, /* SDMMC2_D1 */
+                            <STM32_PINMUX('F', 5, AF9)>, /* SDMMC2_D2 */
+                            <STM32_PINMUX('D', 7, AF10)>, /* SDMMC2_D3 */
+                            <STM32_PINMUX('F', 1, AF9)>; /* SDMMC2_CMD */
+                slew-rate = <0>;
+			    drive-push-pull;
+                bias-pull-up;
+        };
+        pins2 {
+                pinmux = <STM32_PINMUX('G', 15, AF10)>; /* SDMMC2_CK */
+                slew-rate = <0>;
+                drive-push-pull;
+                bias-pull-down;
         };
     };
 
@@ -574,13 +619,19 @@
 
 };
 
+&rtc {
+	pinctrl-names = "default";
+    pinctrl-0 = <&rtc_out2_rmp_pins_a>;
+    st,lsco = <RTC_OUT2_RMP>;
+    status = "okay";
+};
+
 &iwdg2{
     status = "okay";
 
     /* USER CODE BEGIN iwdg2 */
     /* USER CODE END iwdg2 */
 };
-
 
 &rcc{
     u-boot,dm-pre-reloc;
@@ -603,6 +654,23 @@
 	max-frequency = <10000000>;
 	vmmc-supply = <&v3v3>;
     /* USER CODE END sdmmc1 */
+};
+
+&sdmmc3{
+    u-boot,dm-pre-reloc;
+    pinctrl-names = "default";
+    pinctrl-0 = <&sdmmc3_pins_mx>;
+    status = "okay";
+
+    /* USER CODE BEGIN sdmmc3 */
+    non-removable;
+	st,neg-edge;
+	bus-width = <4>;
+	max-frequency = <25000000>;
+	vmmc-supply = <&v3v3>;
+    vmmc-supply = <&reg_wifi>;
+    keep-power-in-suspend;
+    /* USER CODE END sdmmc3 */
 };
 
 /* expansion connector */
@@ -640,8 +708,9 @@
 &uart7{
     pinctrl-names = "default";
     pinctrl-0 = <&uart7_pins_mx>;
+    vmmc-supply = <&reg_bl>;
+    st,hw-flow-ctrl;
     status = "okay";
-	st,hw-flow-ctrl;
 	
     /* USER CODE BEGIN uart7 */
     /* USER CODE END uart7 */
