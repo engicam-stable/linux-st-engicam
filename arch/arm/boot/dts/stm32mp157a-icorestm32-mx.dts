@@ -249,7 +249,7 @@
     };
 
     panel_rgb: panel-rgb {
-		compatible = "auo,b101aw03";
+		compatible = "ampire,am800480r3tmqwa1h";
 		status = "okay";
 		port {
 			panel_in_rgb: endpoint {
@@ -543,13 +543,13 @@
                      <STM32_PINMUX('G', 11, ANALOG)>; /* UART4_TX */
         };
     };
-/*
+
     pinctrl_st1232_ts: pinctrl_st1232_ts-0 {
             pins {
-			pinmux = <STM32_PINMUX('H', 10, GPIO)>;
+			pinmux = <STM32_PINMUX('I', 4, GPIO)>;
 		};
 	};	
-*/		 
+
     lcd_pins_icore: lcd-0 {
         pins {
             pinmux = <STM32_PINMUX('I', 12,  AF14)>,/* LCD_HSYNC */
@@ -650,14 +650,14 @@
 	/delete-property/dmas;
 	/delete-property/dma-names;
 
-	
+
 	polytouch: st1232_ts@55 {
 		compatible = "sitronix,st1232-ts";
 		reg = <0x55>;
-//		pinctrl-names = "default";		
-//		pinctrl-0 = <&pinctrl_st1232_ts>;
-		interrupt-parent = <&gpioh>;
-		interrupts = <10 0>;	
+		pinctrl-names = "default";		
+		pinctrl-0 = <&pinctrl_st1232_ts>;
+		interrupt-parent = <&gpioi>;
+		interrupts = <4 2>;	
     };
 
 	codec: sgtl5000@a {
