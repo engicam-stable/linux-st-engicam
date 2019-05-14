@@ -543,13 +543,13 @@
                      <STM32_PINMUX('G', 11, ANALOG)>; /* UART4_TX */
         };
     };
-
-    pinctrl_edt_ft5x26: pinctrl_edt_ft5x26-0 {
+/*
+    pinctrl_st1232_ts: pinctrl_st1232_ts-0 {
             pins {
 			pinmux = <STM32_PINMUX('H', 10, GPIO)>;
 		};
 	};	
-	 
+*/		 
     lcd_pins_icore: lcd-0 {
         pins {
             pinmux = <STM32_PINMUX('I', 12,  AF14)>,/* LCD_HSYNC */
@@ -650,11 +650,12 @@
 	/delete-property/dmas;
 	/delete-property/dma-names;
 
-	polytouch: edt-ft5x26@38 {
-		compatible = "edt,edt-ft5526";
-		reg = <0x38>;
-		pinctrl-names = "default";		
-		pinctrl-0 = <&pinctrl_edt_ft5x26>;
+	
+	polytouch: st1232_ts@55 {
+		compatible = "sitronix,st1232-ts";
+		reg = <0x55>;
+//		pinctrl-names = "default";		
+//		pinctrl-0 = <&pinctrl_st1232_ts>;
 		interrupt-parent = <&gpioh>;
 		interrupts = <10 0>;	
     };
