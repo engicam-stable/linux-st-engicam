@@ -368,20 +368,8 @@ static int sn65dsi83_attach_dsi_pre(struct sn65dsi83 *sn65dsi83)
 
     dsi->lanes = sn65dsi83->brg->num_dsi_lanes;
     dsi->format = MIPI_DSI_FMT_RGB888;
-//    dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_HSE |
-//               MIPI_DSI_CLOCK_NON_CONTINUOUS | MIPI_DSI_MODE_VIDEO_BURST;
 
-#ifdef ICORE_IMX8MM
-  dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_HSE;
-#else
-  dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_HSE |
-              MIPI_DSI_CLOCK_NON_CONTINUOUS;
-#endif
-
-  dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_HSE;
-
-//	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
-//			  MIPI_DSI_MODE_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
+    dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_VIDEO_BURST;
 
     ret = mipi_dsi_attach(dsi);
     if (ret < 0) {
