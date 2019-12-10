@@ -931,6 +931,7 @@ dtb-$(CONFIG_ARCH_STM32) += \
 	stm32mp157c-ev1-a7-examples.dtb \
 	stm32mp157c-ev1-m4-examples.dtb \
 	stm32mp157a-ugeast-mx.dtb \
+	stm32mp157a-ugeast-mx-m4.dtb \
 	stm32mp157a-ugeast-mx-lcd7.dtb \
     stm32mp157a-icorestm32-mx.dtb \
 	stm32mp157a-icorestm32-lvds-mx.dtb
